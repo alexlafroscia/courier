@@ -1,6 +1,6 @@
-import * as path from "path";
-import * as vscode from "vscode";
-import getProjectPath from "./utils/storage-path";
+import * as path from 'path';
+import * as vscode from 'vscode';
+import getProjectPath from './utils/storage-path';
 
 export default class Project {
   name: string;
