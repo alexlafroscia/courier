@@ -21,8 +21,6 @@ export default class Project {
 
   get rootPath(): string {
     if (!this.projectDirectory) {
-      debugger;
-
       throw new Error('Project has not been set up');
     }
 
