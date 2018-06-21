@@ -1,5 +1,8 @@
 import * as path from 'path';
+
 import * as vscode from 'vscode';
+import Bundler = require('parcel-bundler');
+
 import getProjectPath from './utils/storage-path';
 
 export default class Project {
@@ -22,5 +25,18 @@ export default class Project {
     let projectRoot = await this.rootPath();
 
     return path.join(projectRoot, file);
+  }
+
+  /**
+   * Begin building the Parcel project
+   */
+  async makeBundler(options?: object): Promise<Bundler> {
+    let entry = await this.filePath('index.html');
+
+    return new Bundler(entry, {
+      outDir: await this.filePath('dist'),
+      cacheDir: await this.filePath('.cache'),
+      watch: false
+    });
   }
 }
