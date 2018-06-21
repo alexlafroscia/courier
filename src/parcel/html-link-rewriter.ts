@@ -12,26 +12,27 @@ export default function createLinkRewriter(
       let originalContent = asset.generated.html;
       let $ = cheerio.load(originalContent!);
 
-      $('script').each(async (_index, element) => {
-        let src = $(element).attr('src');
+      function replaceAttr(element: CheerioElement, attr: string): void {
+        let value = $(element).attr(attr);
 
-        if (src.startsWith('/')) {
-          let file = src.substring(1);
+        if (value.startsWith('/')) {
+          let file = value.substring(1);
           let uri = vscode.Uri.file(project.filePath(`dist/${file}`));
 
-          $(element).attr('src', uri.with({ scheme: 'vscode-resource' }));
+          $(element).attr(attr, uri.with({ scheme: 'vscode-resource' }));
         }
+      }
+
+      $('script').each((_index, element) => {
+        replaceAttr(element, 'src');
       });
 
-      $('link').each(async (_index, element) => {
-        let href = $(element).attr('href');
+      $('link').each((_index, element) => {
+        replaceAttr(element, 'href');
+      });
 
-        if (href.startsWith('/')) {
-          let file = href.substring(1);
-          let uri = vscode.Uri.file(project.filePath(`dist/${file}`));
-
-          $(element).attr('href', uri.with({ scheme: 'vscode-resource' }));
-        }
+      $('img').each((_index, element) => {
+        replaceAttr(element, 'src');
       });
 
       await this.dest.write($.html());
