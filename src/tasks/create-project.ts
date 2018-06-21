@@ -6,6 +6,11 @@ import Project from '../project';
 import generateName from '../utils/generate-name';
 import getProjectPath from '../utils/storage-path';
 
+/**
+ * Create a new Project
+ *
+ * @param context The current extension context
+ */
 export default async function createProject(
   context: vscode.ExtensionContext
 ): Promise<Project> {

@@ -13,7 +13,8 @@
   ],
   "activationEvents": [
     "workspaceContains:**/.courier-project",
-    "onCommand:courier.createProject"
+    "onCommand:courier.createProject",
+    "onCommand:courier.openProject"
   ],
   "main": "./out/extension",
   "contributes": {
@@ -21,6 +22,11 @@
       {
         "command": "courier.createProject",
         "title": "Create Project",
+        "category": "Courier"
+      },
+      {
+        "command": "courier.openProject",
+        "title": "Open Project",
         "category": "Courier"
       }
     ]

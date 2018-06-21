@@ -5,11 +5,24 @@ import * as fse from 'fs-extra';
 
 import Project from '../project';
 
-export default async function projectFromWorkspace(
-  folder: vscode.WorkspaceFolder,
+/**
+ * Create a Project from a folder on disk
+ *
+ * @param folder The folder create a project from
+ * @param context The extension context
+ */
+export default async function projectFromFolder(
+  folder: vscode.WorkspaceFolder | string,
   context: vscode.ExtensionContext
 ): Promise<Project | undefined> {
-  let root = folder.uri.path;
+  let root;
+
+  if (typeof folder === 'string') {
+    root = folder;
+  } else {
+    root = folder.uri.path;
+  }
+
   let marker = path.join(root, '.courier-project');
 
   if (await fse.exists(marker)) {
