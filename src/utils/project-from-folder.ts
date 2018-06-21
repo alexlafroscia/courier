@@ -14,7 +14,10 @@ export default async function projectFromWorkspace(
 
   if (await fse.exists(marker)) {
     let info = path.parse(root);
+    let project = new Project(info.name);
 
-    return new Project(info.name, context);
+    await project.setup(context);
+
+    return project;
   }
 }

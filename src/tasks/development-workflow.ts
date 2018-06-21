@@ -10,7 +10,11 @@ export default async function developProject(activeProject: Project) {
   let panel = vscode.window.createWebviewPanel(
     'courier',
     'Courier: Live View',
-    vscode.ViewColumn.Three
+    vscode.ViewColumn.Three,
+    {
+      enableScripts: true,
+      localResourceRoots: [vscode.Uri.file(activeProject.rootPath)]
+    }
   );
 
   let indexFileContent = await fse.readFile(

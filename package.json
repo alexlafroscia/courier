@@ -33,6 +33,7 @@
     "test": "npm run compile && node ./node_modules/vscode/bin/test"
   },
   "devDependencies": {
+    "@types/cheerio": "^0.22.7",
     "@types/fs-extra": "^5.0.3",
     "@types/mocha": "^2.2.42",
     "@types/node": "^7.0.43",
@@ -42,6 +43,7 @@
     "vscode": "^1.1.6"
   },
   "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
     "fs-extra": "^6.0.1",
     "parcel-bundler": "github:alexlafroscia/parcel#without-deasync"
   }

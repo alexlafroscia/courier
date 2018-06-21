@@ -1,9 +1,27 @@
-type Asset = string;
 type BundledEvent = 'bundled';
 type BuildEndEvent = 'buildEnd';
 type LogLevel = 3 | 2 | 1;
 type Target = 'browser' | 'node' | 'electron';
-type Type = 'js' | 'css' | 'map';
+type Type = 'html' | 'js' | 'css' | 'map';
+
+interface File {
+  html?: string;
+}
+
+interface Asset {
+  basename: string;
+  buildTime: number;
+  bundledSize: number;
+  encoding: string;
+  endTime: number;
+  generated: File;
+  hash: string;
+  id: number;
+  isAstDirty: boolean;
+  name: string;
+  parentBundle: Bundle;
+  relativeName: string;
+}
 
 interface BundlerOptions {
   outDir?: string;
@@ -34,6 +52,10 @@ declare class Bundle {
   offsets: Map<Asset, number>;
 }
 
+declare class Destination {
+  write(content: any): Promise<void>;
+}
+
 declare module 'parcel-bundler' {
   class Bundler {
     constructor(file: string, options?: BundlerOptions);
@@ -42,6 +64,17 @@ declare module 'parcel-bundler' {
 
     on(event: BundledEvent, cb: (bundle: Bundle) => void): void;
     on(event: BuildEndEvent, cb: () => void): void;
+
+    addPackager(type: Type, path: string): void;
+    addPackager(type: Type, path: typeof Bundler.Packager): void;
+  }
+
+  namespace Bundler {
+    export class Packager {
+      dest: Destination;
+
+      addAsset(asset: Asset): Promise<void>;
+    }
   }
 
   export = Bundler;

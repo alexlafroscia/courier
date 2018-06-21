@@ -30,5 +30,9 @@ export default async function createProject(
 
   vscode.window.showInformationMessage(`Created project: ${response}`);
 
-  return new Project(response, context);
+  let project = new Project(response);
+
+  await project.setup(context);
+
+  return project;
 }

@@ -4,39 +4,48 @@ import * as vscode from 'vscode';
 import Bundler = require('parcel-bundler');
 
 import getProjectPath from './utils/storage-path';
+import generateLinkRewriter from './parcel/html-link-rewriter';
 
 export default class Project {
   name: string;
 
-  private context: vscode.ExtensionContext;
+  private projectDirectory: string = '';
 
-  constructor(name: string, context: vscode.ExtensionContext) {
+  constructor(name: string) {
     this.name = name;
-    this.context = context;
   }
 
-  async rootPath(): Promise<string> {
-    let projectPath = await getProjectPath(this.context);
-
-    return path.join(projectPath, this.name);
+  async setup(context: vscode.ExtensionContext) {
+    this.projectDirectory = await getProjectPath(context);
   }
 
-  async filePath(file: string): Promise<string> {
-    let projectRoot = await this.rootPath();
+  get rootPath(): string {
+    if (!this.projectDirectory) {
+      debugger;
 
-    return path.join(projectRoot, file);
+      throw new Error('Project has not been set up');
+    }
+
+    return path.join(this.projectDirectory, this.name);
+  }
+
+  filePath(file: string): string {
+    return path.join(this.rootPath, file);
   }
 
   /**
    * Begin building the Parcel project
    */
-  async makeBundler(options?: object): Promise<Bundler> {
+  async makeBundler(): Promise<Bundler> {
     let entry = await this.filePath('index.html');
-
-    return new Bundler(entry, {
-      outDir: await this.filePath('dist'),
-      cacheDir: await this.filePath('.cache'),
+    let bundler = new Bundler(entry, {
+      outDir: this.filePath('dist'),
+      cacheDir: this.filePath('.cache'),
       watch: false
     });
+
+    bundler.addPackager('html', generateLinkRewriter(this));
+
+    return bundler;
   }
 }
