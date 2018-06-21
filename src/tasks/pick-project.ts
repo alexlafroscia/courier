@@ -11,13 +11,15 @@ import storagePath from '../utils/storage-path';
  * Select an existing Project
  *
  * @param context The current extension context
+ * @param options.placeHolder Placeholder text to show in picker menu
  */
 export default async function pickProject(
-  context: vscode.ExtensionContext
+  context: vscode.ExtensionContext,
+  options: vscode.QuickPickOptions = {}
 ): Promise<Project | undefined> {
   let projectRoot = await storagePath(context);
   let projects = await fse.readdir(projectRoot);
-  let selection = await vscode.window.showQuickPick(projects);
+  let selection = await vscode.window.showQuickPick(projects, options);
 
   if (selection) {
     let fullPath = path.join(projectRoot, selection);
