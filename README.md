@@ -1,6 +1,16 @@
-# courier README
+# Courier
 
-This is the README for your extension "courier". After writing up a brief description, we recommend including the following sections.
+Courier is a VSCode plugin built on top of Parcel that enabled an in-editor development environment similar to CodePen. The idea is that you can quickly mock up ideas in HTML, CSS, JS and any other filetype that Parcel supports without ever having to leave VSCode.
+
+## Installation
+
+1.  Clone the repo into your VSCode extensions folder
+2.  Run `yarn install` in the extension root
+3.  Build `parcel` by running `cd node_modules/parcel-bundler && yarn install && yarn build`
+
+The custom `parcel` build is necessary because I had to fork the project to remove an unnecessary dependency that made Parcel difficult to integrate with VSCode.
+
+---
 
 ## Features
 
@@ -24,8 +34,8 @@ For example:
 
 This extension contributes the following settings:
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+- `myExtension.enable`: enable/disable this extension
+- `myExtension.thing`: set to `blah` to do something
 
 ## Known Issues
 
@@ -47,19 +57,4 @@ Fixed issue #.
 
 Added features X, Y, and Z.
 
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+---
