@@ -15,7 +15,7 @@ export default function createLinkRewriter(
       function replaceAttr(element: CheerioElement, attr: string): void {
         let value = $(element).attr(attr);
 
-        if (value.startsWith('/')) {
+        if (value && value.startsWith('/')) {
           let file = value.substring(1);
           let uri = vscode.Uri.file(project.filePath(`dist/${file}`));
 
