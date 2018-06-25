@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
+import * as execa from 'execa';
 
 import Project from '../project';
 import generateName from '../utils/generate-name';
@@ -24,6 +25,10 @@ export default async function createProject(
     response = defaultName;
   }
 
+  let projectCreationMessage = vscode.window.setStatusBarMessage(
+    `Creating Project: ${response}`
+  );
+
   let storagePath = await getProjectPath(context);
   let projectPath = path.join(storagePath, response);
 
@@ -33,6 +38,11 @@ export default async function createProject(
 
   await fse.copy(projectTemplate, projectPath);
 
+  await execa('npm', ['init', '-y'], {
+    cwd: projectPath
+  });
+
+  projectCreationMessage.dispose();
   vscode.window.showInformationMessage(`Created project: ${response}`);
 
   let project = new Project(response);
