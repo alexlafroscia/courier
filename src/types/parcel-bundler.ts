@@ -56,7 +56,7 @@ declare class Destination {
   write(content: any): Promise<void>;
 }
 
-declare module 'parcel-bundler' {
+declare module '@alexlafroscia/parcel-bundler' {
   class Bundler {
     constructor(file: string, options?: BundlerOptions);
 

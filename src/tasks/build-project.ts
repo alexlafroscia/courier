@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import Bundler = require('parcel-bundler');
+import Bundler = require('@alexlafroscia/parcel-bundler');
 
 import Project from '../project';
 

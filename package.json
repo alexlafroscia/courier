@@ -56,9 +56,9 @@
     "vscode": "^1.1.6"
   },
   "dependencies": {
+    "@alexlafroscia/parcel-bundler": "^1.9.3",
     "cheerio": "^1.0.0-rc.2",
     "execa": "^0.10.0",
-    "fs-extra": "^6.0.1",
-    "parcel-bundler": "github:alexlafroscia/parcel#without-deasync"
+    "fs-extra": "^6.0.1"
   }
 }

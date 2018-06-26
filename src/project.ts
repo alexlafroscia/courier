@@ -1,7 +1,7 @@
 import * as path from 'path';
 
 import * as vscode from 'vscode';
-import Bundler = require('parcel-bundler');
+import Bundler = require('@alexlafroscia/parcel-bundler');
 
 import getProjectPath from './utils/storage-path';
 import generateLinkRewriter from './parcel/html-link-rewriter';
