@@ -23,23 +23,6 @@ interface Asset {
   relativeName: string;
 }
 
-interface BundlerOptions {
-  outDir?: string;
-  outFile?: string;
-  publicUrl?: string;
-  watch?: boolean;
-  cache?: boolean;
-  cacheDir?: string;
-  minify?: boolean;
-  target?: Target;
-  https?: boolean;
-  logLevel?: LogLevel;
-  hmrPort?: number;
-  hmrHostname?: string;
-  sourceMaps?: boolean;
-  detailedReport?: boolean;
-}
-
 declare class Bundle {
   type: Type;
   name: string;
@@ -57,6 +40,26 @@ declare class Destination {
 }
 
 declare module '@alexlafroscia/parcel-bundler' {
+  import * as stream from 'stream';
+
+  interface BundlerOptions {
+    outDir?: string;
+    outFile?: string;
+    publicUrl?: string;
+    watch?: boolean;
+    cache?: boolean;
+    cacheDir?: string;
+    minify?: boolean;
+    target?: Target;
+    https?: boolean;
+    logStream?: stream.Writable;
+    logLevel?: LogLevel;
+    hmrPort?: number;
+    hmrHostname?: string;
+    sourceMaps?: boolean;
+    detailedReport?: boolean;
+  }
+
   class Bundler {
     constructor(file: string, options?: BundlerOptions);
 

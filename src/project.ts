@@ -1,3 +1,5 @@
+import EventEmitter = require('events');
+import { Writable } from 'stream';
 import * as path from 'path';
 
 import * as vscode from 'vscode';
@@ -34,12 +36,20 @@ export default class Project {
   /**
    * Begin building the Parcel project
    */
-  async makeBundler(): Promise<Bundler> {
+  async makeBundler(emitter: EventEmitter): Promise<Bundler> {
+    class WriteToEvents extends Writable {
+      _write(chunk: string | Buffer, _encoding: string, next: () => void) {
+        emitter.emit('log', chunk);
+        next();
+      }
+    }
+
     let entry = await this.filePath('index.html');
     let bundler = new Bundler(entry, {
       outDir: this.filePath('dist'),
       cacheDir: this.filePath('.cache'),
-      watch: false
+      watch: false,
+      logStream: new WriteToEvents()
     });
 
     bundler.addPackager('html', generateLinkRewriter(this));

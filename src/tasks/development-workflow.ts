@@ -25,7 +25,7 @@ export default async function developProject(activeProject: Project) {
   let saveListener = vscode.workspace.onDidSaveTextDocument(async () => {
     panel.title = 'Courier: Rebuilding...';
 
-    await buildProject(activeProject!, 'Rebuilding...');
+    await buildProject(activeProject!);
 
     let indexFileContent = await fse.readFile(
       await activeProject!.filePath('dist/index.html')

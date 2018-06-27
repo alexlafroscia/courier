@@ -1,18 +1,40 @@
+import EventEmitter = require('events');
 import * as vscode from 'vscode';
-import Bundler = require('@alexlafroscia/parcel-bundler');
 
 import Project from '../project';
 
-export default async function buildProject(
-  project: Project,
-  buildLabel: string = 'Building...'
-): Promise<Bundler> {
-  let bundler = await project.makeBundler();
-  let buildPromise = bundler.bundle();
+const BUILD_SIGIL = '⏳ ';
 
-  vscode.window.setStatusBarMessage(buildLabel, buildPromise);
+function clean(log: string) {
+  return log.trim().replace(BUILD_SIGIL, '');
+}
 
-  await buildPromise;
+function filterBuildLogs(log: string) {
+  return log.startsWith(BUILD_SIGIL);
+}
 
-  return bundler;
+export default async function buildProject(project: Project): Promise<void> {
+  let emitter = new EventEmitter();
+
+  return vscode.window.withProgress(
+    {
+      location: vscode.ProgressLocation.Notification,
+      title: 'Building Courier project'
+    },
+    async progress => {
+      emitter.on('log', (chunk: string | Buffer) => {
+        if (chunk instanceof Buffer) {
+          chunk = chunk.toString();
+        }
+
+        if (filterBuildLogs(chunk)) {
+          progress.report({ message: clean(chunk) });
+        }
+      });
+
+      let bundler = await project.makeBundler(emitter);
+
+      await bundler.bundle();
+    }
+  );
 }

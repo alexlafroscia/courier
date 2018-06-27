@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@alexlafroscia/parcel-bundler@^1.9.3":
-  version "1.9.3"
-  resolved "https://registry.yarnpkg.com/@alexlafroscia/parcel-bundler/-/parcel-bundler-1.9.3.tgz#c1f45e74252220a8cdf585b4b9546787ed016983"
+"@alexlafroscia/parcel-bundler@^1.9.3-ext.1":
+  version "1.9.3-ext.1"
+  resolved "https://registry.yarnpkg.com/@alexlafroscia/parcel-bundler/-/parcel-bundler-1.9.3-ext.1.tgz#eb822a6fab45e1e6422819978b29ff66ed2057bd"
   dependencies:
     ansi-to-html "^0.6.4"
     babel-code-frame "^6.26.0"
