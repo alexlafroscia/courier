@@ -7,8 +7,6 @@ Courier is a VSCode plugin built on top of Parcel that enabled an in-editor deve
 1.  Clone the repo into your VSCode extensions folder
 2.  Run `yarn install` in the extension root
 
-The custom `parcel` build is necessary because I had to fork the project to remove an unnecessary dependency that made Parcel difficult to integrate with VSCode.
-
 ---
 
 ## Features
